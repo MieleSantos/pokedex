@@ -33,3 +33,36 @@ pokeApi.getPokemons = (offset = 0, limit = 5) => {
         .then((detailRequests) => Promise.all(detailRequests))
         .then((pokemonsDetails) => pokemonsDetails)
 }
+
+
+function getPokemonsDetail() {
+    var inputValue = document.getElementById("searchInput").value;
+   
+    const url = `https://pokeapi.co/api/v2/pokemon/${inputValue}`
+    
+    fetch(url)
+        .then((response) =>{
+            return response.json()
+        })
+        .then(data => {
+            console.log(data.name, data.number, data.type)
+            const newHtml = `
+                <div class="pokemon">
+                    <span class="names">${data.name}</span>
+
+                    <div  class="details">
+                        <img class="imgs" src="${data.sprites.other.dream_world.front_default}"
+                            alt="${data.name}">
+                    </div>
+                </div>
+            `   
+            pokemonList.innerHTML = newHtml
+           
+            
+        }).catch((erro) => {
+            console.log("Erro:", erro); // Exibe o erro no console
+            alert("Erro: " + erro); // Mostra o erro em um alerta
+        });
+    
+}
+
